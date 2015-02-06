@@ -8,9 +8,9 @@ sleep 1
 echo '1...'
 sleep 1
 export PATH=$PATH:/ether/qktmp/bin
-echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-gnueabihf --with-lib-path=/ether/qktmp/lib' 
+echo 'START: configure --prefix=/usr --disable-werror --host=armv7l-nexos-linux-gnueabihf'  
 cd /ether/build/binutils
-if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-gnueabihf --with-lib-path=/ether/qktmp/lib`]; then
+if [!`/ether/src/binutils-2.24/configure --prefix=/usr --disable-werror --host=armv7l-nexos-linux-gnueabihf`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -28,7 +28,7 @@ echo 'BUILD SUCCESSFUL'
 echo 'STARTING INSTALL'
 sleep 3
 fi
-if [ ! `make install`]; then
+if [ ! `make install DESTDIR=/ether/qkbit`]; then
 echo 'INSTALL FAILED'
 echo `date`
 exit
@@ -56,9 +56,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts' 
+echo 'START: configure --prefix=/usr --host=armv7l-nexos-linux-gnueabihf --enable-languages="c,c++" --enable-shared --disable-static --disable-bootstrap --disable-multilib' 
 cd /ether/build/gcc
-if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
+if [!`/ether/src/gcc-4.9.2/configure --prefix=/usr --host=armv7l-nexos-linux-gnueabihf --enable-languages="c,c++" --enable-shared --disable-static --disable-bootstrap --disable-multilib`]; 
 then
 echo 'CONFIGURE FAILED'
 echo `date`
@@ -78,7 +78,7 @@ echo 'BUILD SUCCESSFUL'
 echo 'STARTING INSTALL'
 sleep 3
 fi
-if [ ! `make install` ]; then
+if [ ! `make install DESTDIR=/ether/qkbit` ]; then
 echo 'INSTALL FAILED'
 echo `date`
 exit
@@ -98,6 +98,45 @@ echo '--------------------------------'
 echo 'FINISHED INSTALLING GCC STAGE II'
 echo `date`
 echo '--------------------------------'
+fi
+echo 'INSTALLING LINUX HEADERS STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+cd /ether/src/linux-3.1.10
+echo 'START: make mrproper' 
+if [!`make mrproper`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make INSTALL_HDR_PATH=/ether/qkbit/usr headers_install` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make mrproper` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '------------------------------------------'
+echo 'FINISHED INSTALLING LINUX HEADERS STAGE II'
+echo `date`
+echo '------------------------------------------'
 fi
 echo 'INSTALLING GLIBC STAGE II'
 echo '3...'
@@ -147,41 +186,6 @@ echo 'FINISHED INSTALLING GLIBC STAGE II'
 echo `date`
 echo '--------------------------------------'
 fi
-echo 'INSTALLING ZLIB'
-echo '3...'
-sleep 1
-echo '2...'
-sleep 1
-echo '1...'
-sleep 1
-echo 'START: configure --prefix=/usr' 
-cd /ether/src/zlib-1.2.8
-if [!`./configure --prefix=/usr` ];then 
-echo 'CONFIGURE FAILED'
-else
-echo 'CONFIGURE SUCCESSFUL'
-echo 'STARTING BUILD'
-fi
-if [! `make` ]; then
-echo 'BUILD FAILED'
-else
-echo 'BUILD SUCCESSFUL'
-echo 'STARTING INSTALL'
-fi
-if [! `make install DESTDIR=/ether/qkbit` ]; then
-echo 'INSTALL FAILED'
-else
-echo 'INSTALL SUCCESSFUL'
-echo 'STARTING CLEAN'
-fi
-if [! `make clean` ]; then
-echo 'CLEAN FAILED'
-else
-echo 'CLEAN SUCCESSFUL'
-echo '-----------------------------------------'
-echo 'FINISHED INSTALLING ZLIB'
-echo `date`
-echo '-----------------------------------------'
 echo 'POST-PROCESSING THE ENVIRONMENT'
 echo 'SYSTEM READY'
-fi
+

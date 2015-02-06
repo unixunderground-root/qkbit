@@ -2,9 +2,8 @@
 echo ''
 echo 'BUILD TOOLCHAIN ENVIRONMENT SUITE'
 sleep 3
-echo 'YOU MUST UNINSTALL YOUR DISTRO GCC AND BINUTILS TO CONTINUE'
 sleep 5
-export PATH=$PATH:/ether/qktmp/bin:/ether/qktmp/armv7l-unknown-linux-musleabihf/bin
+export PATH=$PATH:/ether/qktmp/bin
 cd /ether/qktmp/bin
 ln -sf musl-gcc armv7l-unknown-linux-musleabihf-cc
 echo 'INSTALLING ZLIB'
@@ -14,9 +13,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/usr/local' 
+echo 'START: configure --prefix=/usr' 
 cd /ether/src/zlib-1.2.8
-if [!`./configure --prefix=/usr/local` ];then 
+if [!`./configure --prefix=/usr` ];then 
 echo 'CONFIGURE FAILED'
 else
 echo 'CONFIGURE SUCCESSFUL'
@@ -50,9 +49,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/usr/local --without-ada --without-cxx --without-cxx-binding' 
+echo 'START: configure --prefix=/usr --without-ada' 
 cd /ether/build/ncurses
-if [!`/ether/src/ncurses-5.9/configure --prefix=/usr/local --without-ada --without-cxx --without-cxx-binding` ]; then 
+if [!`/ether/src/ncurses-5.9/configure --prefix=/usr --without-ada` ]; then 
 echo 'CONFIGURE FAILED'
 else
 echo 'CONFIGURE SUCCESSFUL'
@@ -95,7 +94,7 @@ cd /ether/src/toybox-0.5.1
 /ether/qktools/7zaqk x /ether/src/compressed/toybox.7z
 cp /ether/src/configs/toybox.conf .config
 cd /ether/src/toybox-0.5.1
-if [!`PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-unknown-linux-musleabihf- make`]; then
+if [!`PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-nexos-linux-musleabihf- make`]; then
 echo 'BUILD FAILED'
 echo `date`
 exit 
@@ -104,7 +103,7 @@ echo 'BUILD SUCCESSFUL'
 echo 'STARTING INSTALL'
 sleep 3
 fi
-if [ ! `PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-unknown-linux-musleabihf- make install`]; then
+if [ ! `PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-nexos-linux-musleabihf- make install`]; then
 echo 'INSTALL FAILED'
 echo `date`
 exit 
@@ -122,10 +121,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/usr/local'
+echo 'START: configure --prefix=/usr'
 cd /ether/build/nano 
-if [! `CFLAGS="-L/ether/gqkbit/usr/local/lib 
--I/ether/gqkbit/usr/local/include" /ether/src/nano-2.2.6/configure --prefix=/usr/local` ]; then
+if [! `/ether/src/nano-2.2.6/configure --prefix=/usr` ]; then
 echo 'CONFIGURE FAILED'
 else
 echo 'CONFIGURE SUCCESSFUL'

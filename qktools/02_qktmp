@@ -11,9 +11,9 @@ sleep 1
 echo '1...'
 sleep 1
 export PATH=$PATH:/ether/qktmp/bin
-echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-gnueabihf --with-lib-path=/ether/qktmp/lib' 
+echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-nexos-linux-gnueabihf --with-lib-path=/ether/qktmp/lib' 
 cd /ether/build/binutils
-if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-gnueabihf --with-lib-path=/ether/qktmp/lib`]; then
+if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-nexos-linux-gnueabihf --with-lib-path=/ether/qktmp/lib`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -59,9 +59,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts' 
+echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts' 
 cd /ether/build/gcc
-if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
+if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
 then
 echo 'CONFIGURE FAILED'
 echo `date`
@@ -148,9 +148,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --build=$(../glibc-2.20/scripts/config.guess) --disable-profile --with-headers=/ether/qktmp/include libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes' 
+echo 'START: configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --build=$(/ether/src/glibc-2.20/scripts/config.guess) --disable-profile --with-headers=/ether/qktmp/include libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes' 
 cd /ether/build/glibc
-if [!`/ether/src/glibc-2.20/configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --build=$(/ether/src/glibc-2.20/scripts/config.guess) --disable-profile --with-headers=/ether/qktmp/include libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes`]; then
+if [!`/ether/src/glibc-2.20/configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --build=$(/ether/src/glibc-2.20/scripts/config.guess) --disable-profile --with-headers=/ether/qktmp/include libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -196,9 +196,9 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.1' 
+echo 'START: configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2' 
 cd /ether/build/libstdcxx
-if [!`/ether/src/gcc-4.9.2/libstdc++-v3/configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2`]; then
+if [!`/ether/src/gcc-4.9.2/libstdc++-v3/configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
