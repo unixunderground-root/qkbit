@@ -1,0 +1,47 @@
+echo 'INSTALLING BINUTILS STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-musleabihf --with-lib-path=/ether/qktmp/lib' 
+if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-musleabihf --with-lib-path=/ether/qktmp/lib`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit 1
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 1
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit 1
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit 1
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+fi
+echo '------------------------------------'
+echo 'FINISHED INSTALLING BINUTILS STAGE I'
+echo `date`
+echo '------------------------------------'

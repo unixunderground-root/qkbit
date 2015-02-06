@@ -1,0 +1,49 @@
+echo 'INSTALLING MUSL-LIBC STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+export PATH=$PATH:/ether/qktools/mksh
+echo 'START: configure --prefix=/ether/qktmp --target=armv7l-unknown-linux-musleabihf' 
+cd /ether/src/musl-1.1.5
+if [!`./configure --prefix=/ether/qktmp --target=armv7l-unknown-linux-musleabihf`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit 1
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 1
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit 1
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit 1
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+fi
+echo '-------------------------------------'
+echo 'FINISHED INSTALLING MUSL-LIBC STAGE I'
+echo `date`
+echo '-------------------------------------'

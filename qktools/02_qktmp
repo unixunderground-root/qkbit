@@ -1,0 +1,243 @@
+#!/ether/qktools/mksh
+echo ''
+echo 'BUILD THE SYSTEM'
+echo ''
+sleep 3
+echo 'INSTALLING BINUTILS STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+export PATH=$PATH:/ether/qktmp/bin
+echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-gnueabihf --with-lib-path=/ether/qktmp/lib' 
+cd /ether/build/binutils
+if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-unknown-linux-gnueabihf --with-lib-path=/ether/qktmp/lib`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '------------------------------------'
+echo 'FINISHED INSTALLING BINUTILS STAGE I'
+echo `date`
+echo '------------------------------------'
+fi
+echo 'INSTALLING GCC STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts' 
+cd /ether/build/gcc
+if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
+then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+sed -i 's/none-/armv7l-/' Makefile
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install` ]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+#exit
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '--------------------------------'
+echo 'FINISHED INSTALLING GCC STAGE I'
+echo `date`
+echo '--------------------------------'
+fi
+echo 'INSTALLING LINUX HEADERS STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+cd /ether/src/linux-3.1.10
+echo 'START: make mrproper' 
+if [!`make mrproper`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make INSTALL_HDR_PATH=/ether/qktmp headers_install` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make mrproper` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING LINUX HEADERS STAGE I'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING GLIBC STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --build=$(../glibc-2.20/scripts/config.guess) --disable-profile --with-headers=/ether/qktmp/include libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes' 
+cd /ether/build/glibc
+if [!`/ether/src/glibc-2.20/configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --build=$(/ether/src/glibc-2.20/scripts/config.guess) --disable-profile --with-headers=/ether/qktmp/include libc_cv_forced_unwind=yes libc_cv_ctors_header=yes libc_cv_c_cleanup=yes`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '-------------------------------------'
+echo 'FINISHED INSTALLING GLIBC STAGE I'
+echo `date`
+echo '-------------------------------------'
+fi
+echo 'INSTALLING LIBSTDC++ STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.1' 
+cd /ether/build/libstdcxx
+if [!`/ether/src/gcc-4.9.2/libstdc++-v3/configure --prefix=/ether/qktmp --host=armv7l-unknown-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '-------------------------------------'
+echo 'FINISHED INSTALLING LIBSTDC++ STAGE I'
+echo `date`
+echo '-------------------------------------'
+fi
+echo ''
+sleep 3
+echo 'SYSTEM READY'
+echo `date`

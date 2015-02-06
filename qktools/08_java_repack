@@ -1,0 +1,17 @@
+#!/ether/qktools/mksh
+echo ''
+echo 'UNPACK JAVA (FROM ARCH LINUX)'
+echo ''
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+cd /
+sudo tar xvjpf /ether/src/compressed/java_repack.tar.bz2
+cd /usr/bin
+sudo ln -sf ../lib/jvm/java-7-openjdk/bin/* .
+echo ''
+echo 'JAVA IS NOW INSTALLED'
+echo 'SYSTEM READY'

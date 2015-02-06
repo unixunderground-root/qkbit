@@ -1,0 +1,277 @@
+#!/ether/qktools/mksh
+echo ''
+echo 'BUILD THE APP DEVELOPMENT PRODUCT'
+echo ''
+sleep 3
+echo 'YOU MUST UNINSTALL YOUR DISTRO GCC AND BINUTILS TO CONTINUE'
+sleep 5
+export PATH=$PATH:/ether/qktmp/bin:/ether/qktmp/armv7l-unknown-linux-musleabihf/bin
+cd /ether/qktmp/bin
+ln -sf musl-gcc gcc
+ln -sf musl-gcc armv7l-unknown-linux-musleabihf-cc
+cd /ether
+./qktools/buildclean
+echo 'INSTALLING MUSL-LIBC STAGE II'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr --host=armv7l-unknown-linux-musleabihf' 
+cd /ether/src/musl-1.1.5
+if [!`./configure --prefix=/usr --host=armv7l-unknown-linux-musleabihf`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit 
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install DESTDIR=/ether/qkbit`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit 
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit 
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+echo '--------------------------------------'
+echo 'FINISHED INSTALLING MUSL-LIBC STAGE II'
+echo `date`
+echo '--------------------------------------'
+fi
+echo 'INSTALLING TOYBOX'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+export PATH=$PATH:/ether/qktmp/bin
+echo 'START: make' 
+cd /ether/src/toybox-0.5.1
+/ether/qktools/7zaqk x /ether/src/compressed/toybox.7z
+cp /ether/src/configs/toybox.conf .config
+cd /ether/src/toybox-0.5.1
+if [!`PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-unknown-linux-musleabihf- make`]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 
+else 
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-unknown-linux-musleabihf- make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit 
+else
+echo 'INSTALL SUCCESSFUL'
+echo '------------------------------------'
+echo 'FINISHED INSTALLING TOYBOX'
+echo `date`
+echo '------------------------------------'
+fi
+echo 'INSTALLING ZLIB'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr' 
+cd /ether/src/zlib-1.2.8
+if [!`./configure --prefix=/usr` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING ZLIB'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING NCURSES'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr --without-ada --without-cxx --without-cxx-binding' 
+cd /ether/build/ncurses
+if [!`/ether/src/ncurses-5.9/configure --prefix=/usr --without-ada --without-cxx --without-cxx-binding` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING NCURSES'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING CLASSPATH'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr -without-x --disable-gtk-peer --disable-Werror --without-gjdoc --enable-jni --disable-examples --disable-plugin --disable-gconf-peer --disable-alsa --disable-gjdoc' 
+cd /ether/build/classpath
+if [!`/ether/src/classpath-0.99/configure --prefix=/usr -without-x --disable-gtk-peer --disable-Werror --without-gjdoc --enable-jni --disable-examples --disable-plugin --disable-gconf-peer --disable-alsa --disable-gjdoc` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING CLASSPATH'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING JAMVM'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr --with-classpath-install-dir=/usr' 
+cd /ether/build/jamvm
+if [!`CFLAGS="-L/ether/qkbit/usr/lib -I/ether/qkbit/usr/include" /ether/src/jamvm-2.0.0/configure --prefix=/usr --with-classpath-install-dir=/usr` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING JAMVM'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING NANO'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr'
+cd /ether/build/nano 
+if [! `CFLAGS="-L/ether/qkbit/usr/lib -I/ether/qkbit/usr/include" /ether/src/nano-2.2.6/configure --prefix=/usr` ]; then
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else 
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '---------------------------------------'
+echo 'FINISHED INSTALLING NANO'
+echo `date`
+echo '---------------------------------------'
+fi
+echo 'APP DEVELOPMENT PRODUCT COMPLETE'
+echo 'SYSTEM READY'
+echo `date`

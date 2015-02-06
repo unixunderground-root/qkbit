@@ -1,0 +1,166 @@
+#!/ether/qktools/mksh
+echo ''
+echo 'BUILD TOOLCHAIN ENVIRONMENT SUITE'
+sleep 3
+echo 'YOU MUST UNINSTALL YOUR DISTRO GCC AND BINUTILS TO CONTINUE'
+sleep 5
+export PATH=$PATH:/ether/qktmp/bin:/ether/qktmp/armv7l-unknown-linux-musleabihf/bin
+cd /ether/qktmp/bin
+ln -sf musl-gcc armv7l-unknown-linux-musleabihf-cc
+echo 'INSTALLING ZLIB'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr/local' 
+cd /ether/src/zlib-1.2.8
+if [!`./configure --prefix=/usr/local` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING ZLIB'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING NCURSES'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr/local --without-ada --without-cxx --without-cxx-binding' 
+cd /ether/build/ncurses
+if [!`/ether/src/ncurses-5.9/configure --prefix=/usr/local --without-ada --without-cxx --without-cxx-binding` ]; then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo 'POST-PROCESSING NCURSES'
+cd /ether/qkbit/usr/local/include/ncurses
+sudo cp -r * ../
+echo 'POST-PROCESSING NCURSES COMPLETE'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING NCURSES'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING TOYBOX'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: make' 
+cd /ether/src/toybox-0.5.1
+/ether/qktools/7zaqk x /ether/src/compressed/toybox.7z
+cp /ether/src/configs/toybox.conf .config
+cd /ether/src/toybox-0.5.1
+if [!`PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-unknown-linux-musleabihf- make`]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 
+else 
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `PREFIX=/ether/qkbit CROSS_COMPILE=armv7l-unknown-linux-musleabihf- make install`]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit 
+else
+echo 'INSTALL SUCCESSFUL'
+echo '------------------------------------'
+echo 'FINISHED INSTALLING TOYBOX'
+echo `date`
+echo '------------------------------------'
+fi
+echo 'INSTALLING NANO'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/usr/local'
+cd /ether/build/nano 
+if [! `CFLAGS="-L/ether/gqkbit/usr/local/lib 
+-I/ether/gqkbit/usr/local/include" /ether/src/nano-2.2.6/configure --prefix=/usr/local` ]; then
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else 
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install DESTDIR=/ether/qkbit` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '---------------------------------------'
+echo 'FINISHED INSTALLING NANO'
+echo `date`
+echo '---------------------------------------'
+fi
+echo 'POST-PROCESSING THE ENVIRONMENT'
+mkdir -p /ether/qkbit/bin
+cd /ether/qkbit/bin
+cp /ether/qktools/mksh .
+ln -sf mksh sh
+cd /ether/qkbit
+mkdir -p etc
+cd etc
+cp /ether/src/configs/profile .
+echo 'POST-PROCESSING ENVIRONMENT COMPLETE'
+echo 'SYSTEM READY'
+echo `date`

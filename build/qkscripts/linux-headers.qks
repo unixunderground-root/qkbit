@@ -1,0 +1,39 @@
+echo 'INSTALLING LINUX HEADERS STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+cd /ether/src/linux-3.4.105
+echo 'START: make mrproper' 
+if [!`make mrproper`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit 1
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make INSTALL_HDR_PATH=/ether/qktmp headers_install` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 1
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make mrproper` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit 1
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+fi
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING LINUX HEADERS STAGE I'
+echo `date`
+echo '-----------------------------------------'

@@ -1,0 +1,48 @@
+echo 'INSTALLING GCC STAGE I'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+export PATH=$PATH:/ether/qktools/mksh
+echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-unknown-linux-musleabihf --with-native-system-header-dir=/ether/qktmp/include --disable-decimal-float --disable-threads --disable-libatomic --disable-libgomp --disable-libitm --disable-libquadmath --disable-libsanitizer --disable-libssp --disable-libvtv --disable-libcilkrts --disable-libstdc++-v3 --disable-shared --enable-languages="c,c++" --with-newlib --without-headers' 
+if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --target=armv7l-unknown-linux-musleabihf --with-native-system-header-dir=/ether/qktmp/include --disable-decimal-float --disable-threads --disable-libatomic --disable-libgomp --disable-libquadmath --disable-libsanitizer --disable-libssp --disable-libvtv --disable-libitm --disable-libcilkrts --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers`]; then
+echo 'CONFIGURE FAILED'
+echo `date`
+exit 1
+else 
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+sleep 3
+fi
+if [ ! `make` ]; then
+echo 'BUILD FAILED'
+echo `date`
+exit 1
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+sleep 3
+fi
+if [ ! `make install` ]; then
+echo 'INSTALL FAILED'
+echo `date`
+exit 1
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+sleep 3
+fi
+if [ ! `make clean` ]; then
+echo 'CLEAN FAILED'
+echo `date`
+exit 1
+else
+echo 'CLEAN SUCCESSFUL'
+sleep 3
+fi
+echo '--------------------------------'
+echo 'FINISHED INSTALLING GCC STAGE I'
+echo `date`
+echo '--------------------------------'

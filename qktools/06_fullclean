@@ -1,0 +1,13 @@
+#!/ether/qktools/mksh
+rm -rf /ether/src/gcc-4.9.2
+rm -rf /ether/src/binutils-2.24
+rm -rf /ether/src/musl-1.1.5
+rm -rf /ether/src/linux-3.1.10
+rm -rf /ether/src/classpath-0.99
+rm -rf /ether/src/jamvm-2.0.0
+rm -rf /ether/src/toybox-0.5.1
+rm -rf /ether/src/zlib-1.2.8
+rm -rf /ether/src/nano-2.2.6
+rm -rf /ether/src/ncurses-5.9
+rm -rf /ether/src/glibc-2.20
+echo 'SYSTEM READY'

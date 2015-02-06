@@ -1,0 +1,4 @@
+#!/ether/qktools/mksh
+rm -rf /ether/qktmp/*
+rm -rf /ether/qkbit/*
+echo 'SYSTEM READY'

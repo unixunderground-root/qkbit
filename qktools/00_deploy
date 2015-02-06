@@ -1,0 +1,30 @@
+#!/bin/sh
+sudo rm -rf /ether
+echo 'PLEASE RUN THIS SCRIPT FROM THE ROOT OF ETHER BUILD ENVIRONMENT CHECKOUT'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+export ETHER=`pwd`
+sudo ln -sf "$ETHER" /ether
+echo ''
+echo  "$ETHER -> /ether"
+echo ''
+echo 'PLEASE DOUBLE CHECK THE LAST LINE OF OUTPUT'
+echo ''
+sleep 5
+mkdir -p /ether/qktmp /ether/build/gcc /ether/build/binutils /ether/build/classpath /ether/build/jamvm /ether/build/nano /ether/build/ncurses /ether/build/glibc /ether/build/libstdcxx
+echo 'DISPLAYING CONTENTS OF /ether/build'
+echo ''
+ls /ether/build
+sleep 5
+echo ''
+echo 'DISPLAYING CONTENTS OF /ether'
+echo ''
+mkdir -p /ether/qkbit 
+ls /ether
+sleep 5
+echo 'Environment setup script has been run.'
+echo 'SYSTEM READY'

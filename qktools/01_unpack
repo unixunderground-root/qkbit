@@ -1,0 +1,73 @@
+#!/ether/qktools/mksh
+echo ''
+echo 'START SECURE UNPACK'
+echo ''
+sleep 3
+echo 'Verify binutils...'
+echo `cat /ether/src/compressed/binutils.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/binutils.7z`
+echo ''
+sleep 2
+echo 'Verify gcc...'
+echo `cat /ether/src/compressed/gcc.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/gcc.7z`
+echo ''
+sleep 2
+echo 'Verify linux...'
+echo `cat /ether/src/compressed/linux.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/linux.7z`
+echo ''
+sleep 2
+echo 'Verify glibc...'
+echo `cat /ether/src/compressed/glibc.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/glibc.7z`
+echo ''
+sleep 2
+echo 'PLEASE VERIFY ALL CHECKSUMS'
+echo 'DO NOT CONTINUE IF THERE IS A MISMATCH!'
+sleep 10
+export PATH=$PATH:/ether/qktools
+echo ''
+echo 'Extract binutils'
+mkdir -p /ether/src/binutils-2.24
+cd /ether/src/binutils-2.24
+if [! `7zaqk x ../compressed/binutils.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract gcc'
+mkdir -p /ether/src/gcc-4.9.2
+cd /ether/src/gcc-4.9.2
+if [! `7zaqk x ../compressed/gcc.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo ''
+echo 'Extract linux'
+mkdir -p /ether/src/linux-3.1.10
+cd /ether/src/linux-3.1.10
+if [! `7zaqk x ../compressed/linux.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract glibc'
+mkdir -p /ether/src/glibc-2.20
+cd /ether/src/glibc-2.20
+if [! `7zaqk x ../compressed/glibc.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo ''
+sleep 3
+echo 'Try "./qktools/qktmp" if this script was successful.'
+echo 'SYSTEM READY'

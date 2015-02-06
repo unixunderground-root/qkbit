@@ -1,0 +1,104 @@
+#!/ether/qktools/mksh
+echo ''
+echo 'START SECURE UNPACK'
+echo ''
+sleep 3
+echo 'Verify toybox...'
+echo `cat /ether/src/compressed/toybox.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/toybox.7z`
+echo ''
+sleep 2
+echo 'Verify classpath...'
+echo `cat /ether/src/compressed/classpath.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/classpath.7z`
+echo ''
+sleep 2
+echo 'Verify jamvm...'
+echo `cat /ether/src/compressed/jamvm.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/jamvm.7z`
+echo ''
+sleep 2
+echo 'Verify zlib...'
+echo `cat /ether/src/compressed/zlib.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/zlib.7z`
+echo ''
+sleep 2
+echo 'Verify ncurses...'
+echo `cat /ether/src/compressed/ncurses.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/ncurses.7z`
+echo ''
+sleep 2
+echo 'Verify nano...'
+echo `cat /ether/src/compressed/nano.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/nano.7z`
+echo ''
+sleep 2
+echo 'PLEASE VERIFY ALL CHECKSUMS'
+echo 'DO NOT CONTINUE IF THERE IS A MISMATCH!'
+sleep 10
+export PATH=$PATH:/ether/qktools
+echo ''
+echo 'Extract toybox'
+mkdir -p /ether/src/toybox-0.5.1
+cd /ether/src/toybox-0.5.1
+if [! `7zaqk x ../compressed/toybox.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract classpath'
+mkdir -p /ether/src/classpath-0.99
+cd /ether/src/classpath-0.99
+if [! `7zaqk x ../compressed/classpath.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo ''
+echo 'Extract jamvm'
+mkdir -p /ether/src/jamvm-2.0.0
+cd /ether/src/jamvm-2.0.0
+if [! `7zaqk x ../compressed/jamvm.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo ''
+echo 'Extract zlib'
+mkdir -p /ether/src/zlib-1.2.8
+cd /ether/src/zlib-1.2.8
+if [! `7zaqk x ../compressed/zlib.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract ncurses'
+mkdir -p /ether/src/ncurses-5.9
+cd /ether/src/ncurses-5.9
+if [! `7zaqk x ../compressed/ncurses.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo '' 
+echo 'Extract nano'
+mkdir -p /ether/src/nano-2.2.6
+cd /ether/src/nano-2.2.6
+if [! `7zaqk x ../compressed/nano.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+sleep 3
+echo 'Try to build a product if this script was successful.'
+echo 'SYSTEM READY'
