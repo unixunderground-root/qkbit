@@ -1,6 +1,6 @@
 #!/ether/qktools/mksh
 echo ''
-echo 'UNPACK JAVA (FROM ARCH LINUX)'
+echo 'UNPACK JAVA (FROM ARCH LINUX ARM)'
 echo ''
 echo '3...'
 sleep 1

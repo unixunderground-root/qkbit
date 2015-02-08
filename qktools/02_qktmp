@@ -1,6 +1,6 @@
 #!/ether/qktools/mksh
 echo ''
-echo 'BUILD THE SYSTEM'
+echo 'BUILD THE STAGE I TOOLCHAIN'
 echo ''
 sleep 3
 echo 'INSTALLING BINUTILS STAGE I'
