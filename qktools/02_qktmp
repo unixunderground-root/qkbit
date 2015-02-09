@@ -69,7 +69,7 @@ cd ../mpc
 cd ../mpfr
 /ether/qktools/7zaqk x /ether/src/compressed/mpfr.7z
 cd /ether/build/gcc
-if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
+if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-newlib --without-headers --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
 then
 echo 'CONFIGURE FAILED'
 echo `date`
@@ -158,7 +158,7 @@ echo '1...'
 sleep 1
 echo 'START: configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --with-headers=/ether/qktmp/include --disable-profile --enable-kernel=2.6.32' 
 cd /ether/build/glibc
-if [!`/ether/src/glibc-2.20/configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --with-headers=/ether/qktmp/include`]; then
+if [!`/ether/src/glibc-2.20/configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --with-headers=/ether/qktmp/include --disable-profile --enable-kernel=2.6.32`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
