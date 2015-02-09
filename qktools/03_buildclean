@@ -1,8 +1,6 @@
 #!/ether/qktools/mksh
 rm -rf /ether/build/gcc/*
 rm -rf /ether/build/binutils/*
-cd /ether/src/musl-1.1.5
-make distclean
 cd /ether/src/linux-3.1.10
 make mrproper
 rm -rf /ether/src/toybox-0.5.1/*
