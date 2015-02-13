@@ -9,5 +9,5 @@ rm -rf /ether/src/toybox-0.5.1
 rm -rf /ether/src/zlib-1.2.8
 rm -rf /ether/src/nano-2.2.6
 rm -rf /ether/src/ncurses-5.9
-rm -rf /ether/src/glibc-2.20
+rm -rf /ether/src/musl-1.1.6
 echo 'SYSTEM READY'

@@ -10,5 +10,6 @@ cd /ether/src/zlib-1.2.8
 make distclean
 rm -rf /ether/build/nano/*
 rm -rf /ether/build/ncurses/*
-rm -rf /ether/build/glibc/*
+cd /ether/src/musl-1.1.6
+make distclean
 echo 'SYSTEM READY'

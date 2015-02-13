@@ -21,10 +21,28 @@ echo ''
 echo `sha1sum /ether/src/compressed/linux.7z`
 echo ''
 sleep 2
-echo 'Verify glibc...'
-echo `cat /ether/src/compressed/glibc.7z.sha1`
+echo 'Verify libc...'
+echo `cat /ether/src/compressed/musl.7z.sha1`
 echo ''
-echo `sha1sum /ether/src/compressed/glibc.7z`
+echo `sha1sum /ether/src/compressed/musl.7z`
+echo ''
+sleep 2
+echo 'Verify gmp...'
+echo `cat /ether/src/compressed/gmp.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/gmp.7z`
+echo ''
+sleep 2
+echo 'Verify mpfr...'
+echo `cat /ether/src/compressed/mpfr.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/mpfr.7z`
+echo ''
+sleep 2
+echo 'Verify mpc...'
+echo `cat /ether/src/compressed/mpc.7z.sha1`
+echo ''
+echo `sha1sum /ether/src/compressed/mpc.7z`
 echo ''
 sleep 2
 echo 'PLEASE VERIFY ALL CHECKSUMS'
@@ -59,15 +77,42 @@ else
 	echo 'SECURE UNPACK SUCCESSFUL'
 fi
 echo '' 
-echo 'Extract glibc'
-mkdir -p /ether/src/glibc-2.20
-cd /ether/src/glibc-2.20
-if [! `7zaqk x ../compressed/glibc.7z` ]; then
+echo 'Extract libc'
+mkdir -p /ether/src/musl-1.1.6
+cd /ether/src/musl-1.1.6
+if [! `7zaqk x ../compressed/musl.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract gmp'
+mkdir -p /ether/src/gmp-6.0.0a
+cd /ether/src/gmp-6.0.0a
+if [! `7zaqk x ../compressed/gmp.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract mpfr'
+mkdir -p /ether/src/mpfr-3.1.2
+cd /ether/src/mpfr-3.1.2
+if [! `7zaqk x ../compressed/mpfr.7z` ]; then
+	echo 'SECURE UNPACK FAILED'
+else
+	echo 'SECURE UNPACK SUCCESSFUL'
+fi
+echo '' 
+echo 'Extract mpc'
+mkdir -p /ether/src/mpc-1.0.2
+cd /ether/src/mpc-1.0.2
+if [! `7zaqk x ../compressed/mpc.7z` ]; then
 	echo 'SECURE UNPACK FAILED'
 else
 	echo 'SECURE UNPACK SUCCESSFUL'
 fi
 echo ''
 sleep 3
-echo 'Try "./qktools/qktmp" if this script was successful.'
+echo 'Try "./qktools/02_qktmp" if this script was successful.'
 echo 'SYSTEM READY'

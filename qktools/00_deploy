@@ -15,7 +15,7 @@ echo ''
 echo 'PLEASE DOUBLE CHECK THE LAST LINE OF OUTPUT'
 echo ''
 sleep 5
-mkdir -p /ether/qktmp /ether/build/gcc /ether/build/binutils /ether/build/classpath /ether/build/jamvm /ether/build/nano /ether/build/ncurses /ether/build/glibc /ether/build/libstdcxx
+mkdir -p /ether/qktmp /ether/build/gcc /ether/build/binutils /ether/build/classpath /ether/build/jamvm /ether/build/nano /ether/build/ncurses /ether/build/libstdcxx /ether/build/gmp /ether/build/mpfr /ether/build/mpc
 echo 'DISPLAYING CONTENTS OF /ether/build'
 echo ''
 ls /ether/build

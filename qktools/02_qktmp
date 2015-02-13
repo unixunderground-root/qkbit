@@ -10,10 +10,18 @@ echo '2...'
 sleep 1
 echo '1...'
 sleep 1
+export ABI="aapcs-linux"
+export HOST="armv7l-nexos-linux-musleabihf"
+export ENDIAN="little"
+export MODE="arm"
+export AARCH="armv7-a"
+export FLOAT="hard"
+export VFP="vfpv3-d16"
+export TARGET="armv7l-nexos-linux-musleabihf"
 export PATH=$PATH:/ether/qktmp/bin
 echo 'START: configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-nexos-linux-gnueabihf --with-lib-path=/ether/qktmp/lib' 
 cd /ether/build/binutils
-if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=armv7l-nexos-linux-gnueabihf --with-lib-path=/ether/qktmp/lib`]; then
+if [!`/ether/src/binutils-2.24/configure --prefix=/ether/qktmp --with-sysroot=/ether/qktmp --disable-werror --target=${TARGET} --with-lib-path=/ether/qktmp/lib`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -52,6 +60,114 @@ echo 'FINISHED INSTALLING BINUTILS STAGE I'
 echo `date`
 echo '------------------------------------'
 fi
+echo 'INSTALLING GMP'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp --build=armv7l-nexos-linux-musleabihf' 
+cd /ether/build/gmp
+if [!`/ether/src/gmp-6.0.0a/configure --prefix=/ether/qktmp --build=${HOST}` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING GMP'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING MPFR'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp --with-gmp=/ether/qktmp' 
+cd /ether/build/mpfr
+if [!`LDFLAGS="-Wl,-rpath,/ether/qktmp/lib" /ether/src/mpfr-3.1.2/configure --prefix=/ether/qktmp --with-gmp=/ether/qktmp` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING MPFR'
+echo `date`
+echo '-----------------------------------------'
+fi
+echo 'INSTALLING MPC'
+echo '3...'
+sleep 1
+echo '2...'
+sleep 1
+echo '1...'
+sleep 1
+echo 'START: configure --prefix=/ether/qktmp ' 
+cd /ether/build/mpc
+if [!`LDFLAGS="-Wl,-rpath,/ether/qktmp/lib" /ether/src/mpc-1.0.2/configure --prefix=/ether/qktmp --with-gmp=/ether/qktmp --with-mpfr=/ether/qktmp` ];then 
+echo 'CONFIGURE FAILED'
+else
+echo 'CONFIGURE SUCCESSFUL'
+echo 'STARTING BUILD'
+fi
+if [! `make` ]; then
+echo 'BUILD FAILED'
+else
+echo 'BUILD SUCCESSFUL'
+echo 'STARTING INSTALL'
+fi
+if [! `make install` ]; then
+echo 'INSTALL FAILED'
+else
+echo 'INSTALL SUCCESSFUL'
+echo 'STARTING CLEAN'
+fi
+if [! `make clean` ]; then
+echo 'CLEAN FAILED'
+else
+echo 'CLEAN SUCCESSFUL'
+echo '-----------------------------------------'
+echo 'FINISHED INSTALLING MPC'
+echo `date`
+echo '-----------------------------------------'
+fi
 echo 'INSTALLING GCC STAGE I'
 echo '3...'
 sleep 1
@@ -60,16 +176,8 @@ sleep 1
 echo '1...'
 sleep 1
 echo 'START: configure --prefix=/ether/qktmp --with-newlib --without-headers --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts' 
-cd /ether/src/gcc-4.9.2
-mkdir -p gmp mpfr mpc
-cd gmp
-/ether/qktools/7zaqk x /ether/src/compressed/gmp.7z
-cd ../mpc
-/ether/qktools/7zaqk x /ether/src/compressed/mpc.7z
-cd ../mpfr
-/ether/qktools/7zaqk x /ether/src/compressed/mpfr.7z
 cd /ether/build/gcc
-if [!`/ether/src/gcc-4.9.2/configure --prefix=/ether/qktmp --with-newlib --without-headers --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts`]; 
+if [!`AR=ar LDFLAGS="-Wl,-rpath,/ether/qktmp/lib" /ether/src/gcc-4.6.4/configure --prefix=/ether/qktmp --with-newlib --without-headers --with-sysroot=/ether/qktmp --with-local-prefix=/ether/qktmp --target=${TARGET} --build=${HOST} --host=${HOST} --with-native-system-header-dir=/ether/qktmp/include --disable-libgomp --disable-libssp --disable-shared --disable-libstdc++-v3 --enable-languages="c,c++" --with-newlib --without-headers --enable-static --disable-libmudflap --disable-mudflap --disable-libsanitizer --disable-threads --disable-libquadmath --disable-libitm --disable-libatomic --disable-decimal-float --disable-libvtv --disable-libcilkrts --with-abi=${ABI} --with-arch=${AARCH} --with-mode=${MODE} --with-float=${FLOAT} --with-fpu=${FPU}`]; 
 then
 echo 'CONFIGURE FAILED'
 echo `date`
@@ -149,16 +257,16 @@ echo 'FINISHED INSTALLING LINUX HEADERS STAGE I'
 echo `date`
 echo '-----------------------------------------'
 fi
-echo 'INSTALLING GLIBC STAGE I'
+echo 'INSTALLING LIBC STAGE I'
 echo '3...'
 sleep 1
 echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --with-headers=/ether/qktmp/include --disable-profile --enable-kernel=2.6.32' 
-cd /ether/build/glibc
-if [!`/ether/src/glibc-2.20/configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --with-headers=/ether/qktmp/include --disable-profile --enable-kernel=2.6.32`]; then
+echo 'START: configure --prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --enable-static --enable-shared --syslibdir=/ether/qktmp/lib --includedir=/ether/qktmp/usr/include' 
+cd /ether/src/musl-1.1.6
+if [!`./configure --prefix=/ether/qktmp --target=armv7l-nexos-linux-gnueabihf --enable-static --enable-shared --syslibdir=/ether/qktmp/lib --includedir=/ether/qktmp/usr/include`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -193,7 +301,7 @@ else
 echo 'CLEAN SUCCESSFUL'
 sleep 3
 echo '-------------------------------------'
-echo 'FINISHED INSTALLING GLIBC STAGE I'
+echo 'FINISHED INSTALLING LIBC STAGE I'
 echo `date`
 echo '-------------------------------------'
 fi
@@ -206,7 +314,7 @@ echo '1...'
 sleep 1
 echo 'START: configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2' 
 cd /ether/build/libstdcxx
-if [!`/ether/src/gcc-4.9.2/libstdc++-v3/configure --prefix=/ether/qktmp --host=armv7l-nexos-linux-gnueabihf --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2`]; then
+if [!`AR=ar LDFLAGS="-Wl,-rpath,/ether/qktmp/lib" /ether/src/gcc-4.6.4/libstdc++-v3/configure --prefix=/ether/qktmp --host=${HOST} --build=${HOST} --target=${TARGET} --disable-multilib --disable-shared --disable-nls --disable-libstdcxx-threads --disable-libstdcxx-pch --with-gxx-include-dir=/ether/qktmp/armv7l-unknown-linux-gnueabihf/include/c++/4.9.2 --with-abi=${ABI} --with-arch=${AARCH} --with-mode=${MODE} --with-float=${FLOAT} --with-fpu=${FPU}`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
