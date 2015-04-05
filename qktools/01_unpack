@@ -9,10 +9,10 @@ echo ''
 echo `sha1sum /ether/src/compressed/binutils.7z`
 echo ''
 sleep 2
-echo 'Verify gcc...'
-echo `cat /ether/src/compressed/gcc.7z.sha1`
+echo 'Verify llvm...'
+echo `cat /ether/src/compressed/llvm.7z.sha1`
 echo ''
-echo `sha1sum /ether/src/compressed/gcc.7z`
+echo `sha1sum /ether/src/compressed/llvm.7z`
 echo ''
 sleep 2
 echo 'Verify linux...'
@@ -25,24 +25,6 @@ echo 'Verify libc...'
 echo `cat /ether/src/compressed/musl.7z.sha1`
 echo ''
 echo `sha1sum /ether/src/compressed/musl.7z`
-echo ''
-sleep 2
-echo 'Verify gmp...'
-echo `cat /ether/src/compressed/gmp.7z.sha1`
-echo ''
-echo `sha1sum /ether/src/compressed/gmp.7z`
-echo ''
-sleep 2
-echo 'Verify mpfr...'
-echo `cat /ether/src/compressed/mpfr.7z.sha1`
-echo ''
-echo `sha1sum /ether/src/compressed/mpfr.7z`
-echo ''
-sleep 2
-echo 'Verify mpc...'
-echo `cat /ether/src/compressed/mpc.7z.sha1`
-echo ''
-echo `sha1sum /ether/src/compressed/mpc.7z`
 echo ''
 sleep 2
 echo 'PLEASE VERIFY ALL CHECKSUMS'
@@ -59,10 +41,10 @@ else
 	echo 'SECURE UNPACK SUCCESSFUL'
 fi
 echo '' 
-echo 'Extract gcc'
-mkdir -p /ether/src/gcc-4.9.2
-cd /ether/src/gcc-4.9.2
-if [! `7zaqk x ../compressed/gcc.7z` ]; then
+echo 'Extract llvm'
+mkdir -p /ether/src/llvm
+cd /ether/src/llvm
+if [! `7zaqk x ../compressed/llvm.7z` ]; then
 	echo 'SECURE UNPACK FAILED'
 else
 	echo 'SECURE UNPACK SUCCESSFUL'
@@ -81,33 +63,6 @@ echo 'Extract libc'
 mkdir -p /ether/src/musl-1.1.6
 cd /ether/src/musl-1.1.6
 if [! `7zaqk x ../compressed/musl.7z` ]; then
-	echo 'SECURE UNPACK FAILED'
-else
-	echo 'SECURE UNPACK SUCCESSFUL'
-fi
-echo '' 
-echo 'Extract gmp'
-mkdir -p /ether/src/gmp-6.0.0a
-cd /ether/src/gmp-6.0.0a
-if [! `7zaqk x ../compressed/gmp.7z` ]; then
-	echo 'SECURE UNPACK FAILED'
-else
-	echo 'SECURE UNPACK SUCCESSFUL'
-fi
-echo '' 
-echo 'Extract mpfr'
-mkdir -p /ether/src/mpfr-3.1.2
-cd /ether/src/mpfr-3.1.2
-if [! `7zaqk x ../compressed/mpfr.7z` ]; then
-	echo 'SECURE UNPACK FAILED'
-else
-	echo 'SECURE UNPACK SUCCESSFUL'
-fi
-echo '' 
-echo 'Extract mpc'
-mkdir -p /ether/src/mpc-1.0.2
-cd /ether/src/mpc-1.0.2
-if [! `7zaqk x ../compressed/mpc.7z` ]; then
 	echo 'SECURE UNPACK FAILED'
 else
 	echo 'SECURE UNPACK SUCCESSFUL'

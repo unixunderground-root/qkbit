@@ -9,18 +9,6 @@ echo ''
 echo `sha1sum /ether/src/compressed/toybox.7z`
 echo ''
 sleep 2
-echo 'Verify classpath...'
-echo `cat /ether/src/compressed/classpath.7z.sha1`
-echo ''
-echo `sha1sum /ether/src/compressed/classpath.7z`
-echo ''
-sleep 2
-echo 'Verify jamvm...'
-echo `cat /ether/src/compressed/jamvm.7z.sha1`
-echo ''
-echo `sha1sum /ether/src/compressed/jamvm.7z`
-echo ''
-sleep 2
 echo 'Verify zlib...'
 echo `cat /ether/src/compressed/zlib.7z.sha1`
 echo ''
@@ -53,24 +41,6 @@ else
 	echo 'SECURE UNPACK SUCCESSFUL'
 fi
 echo '' 
-echo 'Extract classpath'
-mkdir -p /ether/src/classpath-0.99
-cd /ether/src/classpath-0.99
-if [! `7zaqk x ../compressed/classpath.7z` ]; then
-	echo 'SECURE UNPACK FAILED'
-else
-	echo 'SECURE UNPACK SUCCESSFUL'
-fi
-echo ''
-echo 'Extract jamvm'
-mkdir -p /ether/src/jamvm-2.0.0
-cd /ether/src/jamvm-2.0.0
-if [! `7zaqk x ../compressed/jamvm.7z` ]; then
-	echo 'SECURE UNPACK FAILED'
-else
-	echo 'SECURE UNPACK SUCCESSFUL'
-fi
-echo ''
 echo 'Extract zlib'
 mkdir -p /ether/src/zlib-1.2.8
 cd /ether/src/zlib-1.2.8

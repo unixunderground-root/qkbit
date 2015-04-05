@@ -1,11 +1,9 @@
 #!/ether/qktools/mksh
-rm -rf /ether/build/gcc/*
+rm -rf /ether/build/llvm/*
 rm -rf /ether/build/binutils/*
-cd /ether/src/linux-3.1.10
+cd /ether/src/linux-
 make mrproper
 rm -rf /ether/src/toybox-0.5.1/*
-rm -rf /ether/build/classpath/*
-rm -rf /ether/build/jamvm/*
 cd /ether/src/zlib-1.2.8
 make distclean
 rm -rf /ether/build/nano/*

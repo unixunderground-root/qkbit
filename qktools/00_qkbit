@@ -10,9 +10,9 @@ sleep 1
 echo '1...'
 sleep 1
 export PATH=$PATH:/ether/qktmp/bin
-echo 'START: configure --prefix=/usr --disable-werror --host=armv7l-nexos-linux-gnueabihf'  
+echo 'START: configure --prefix=/usr --disable-werror --host=i386-qkbit-linux'  
 cd /ether/build/binutils
-if [!`/ether/src/binutils-2.24/configure --prefix=/usr --disable-werror --host=armv7l-nexos-linux-gnueabihf`]; then
+if [!`/ether/src/binutils-2.24/configure --prefix=/usr --disable-werror --host=i386-qkbit-linux`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -51,17 +51,16 @@ echo 'FINISHED INSTALLING BINUTILS STAGE II'
 echo `date`
 echo '-------------------------------------'
 fi
-echo 'INSTALLING GCC STAGE II'
+echo 'INSTALLING COMPILER SUITE STAGE II'
 echo '3...'
 sleep 1
 echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/usr --host=armv7l-nexos-linux-gnueabihf --enable-languages="c,c++" --enable-shared --disable-static --disable-bootstrap --disable-multilib' 
-cd /ether/build/gcc
-if [!`/ether/src/gcc-4.9.2/configure --prefix=/usr --host=armv7l-nexos-linux-gnueabihf --enable-languages="c,c++" --enable-shared --disable-static --disable-bootstrap --disable-multilib`]; 
-then
+cd /ether/build/llvm
+echo 'START: configure' 
+if [!``]; then
 echo 'CONFIGURE FAILED'
 echo `date`
 exit
@@ -70,7 +69,6 @@ echo 'CONFIGURE SUCCESSFUL'
 echo 'STARTING BUILD'
 sleep 3
 fi
-sed -i 's/none-/armv7l-/' Makefile
 if [ ! `make` ]; then
 echo 'BUILD FAILED'
 echo `date`
@@ -80,7 +78,7 @@ echo 'BUILD SUCCESSFUL'
 echo 'STARTING INSTALL'
 sleep 3
 fi
-if [ ! `make install DESTDIR=/ether/qkbit` ]; then
+if [ ! `make install DESTDIR=/ether/qkbit`]; then
 echo 'INSTALL FAILED'
 echo `date`
 exit
@@ -92,16 +90,16 @@ fi
 if [ ! `make clean` ]; then
 echo 'CLEAN FAILED'
 echo `date`
-#exit
+exit
 else
 echo 'CLEAN SUCCESSFUL'
 sleep 3
-echo '--------------------------------'
-echo 'FINISHED INSTALLING GCC STAGE II'
+echo '-------------------------------------------'
+echo 'FINISHED INSTALLING COMPILER SUITE STAGE II'
 echo `date`
-echo '--------------------------------'
+echo '-------------------------------------------'
 fi
-echo 'INSTALLING LINUX HEADERS STAGE I'
+echo 'INSTALLING LINUX HEADERS STAGE II'
 echo '3...'
 sleep 1
 echo '2...'
@@ -140,19 +138,19 @@ echo 'FINISHED INSTALLING LINUX HEADERS STAGE II'
 echo `date`
 echo '------------------------------------------'
 fi
-echo 'INSTALLING GLIBC STAGE II'
+echo 'INSTALLING LIBC STAGE II'
 echo '3...'
 sleep 1
 echo '2...'
 sleep 1
 echo '1...'
 sleep 1
-echo 'START: configure --prefix=/usr' 
-cd /ether/build/glibc
-if [!`/ether/src/glibc-2.20/configure --prefix=/usr`]; then
+echo 'START: configure --prefix=/ether/qktmp --host=i386-qkbit-linux --enable-static --enable-shared --syslibdir=/lib --includedir=/usr/include' 
+cd /ether/src/musl-1.1.6
+if [!`./configure --prefix=/ether/qktmp --host=i386-qkbit-linux --enable-static --enable-shared --syslibdir=/lib --includedir=/usr/include`]; then
 echo 'CONFIGURE FAILED'
 echo `date`
-exit 
+exit
 else 
 echo 'CONFIGURE SUCCESSFUL'
 echo 'STARTING BUILD'
@@ -161,7 +159,7 @@ fi
 if [ ! `make` ]; then
 echo 'BUILD FAILED'
 echo `date`
-exit 
+exit
 else
 echo 'BUILD SUCCESSFUL'
 echo 'STARTING INSTALL'
@@ -170,7 +168,7 @@ fi
 if [ ! `make install DESTDIR=/ether/qkbit`]; then
 echo 'INSTALL FAILED'
 echo `date`
-exit 
+exit
 else
 echo 'INSTALL SUCCESSFUL'
 echo 'STARTING CLEAN'
@@ -179,14 +177,14 @@ fi
 if [ ! `make clean` ]; then
 echo 'CLEAN FAILED'
 echo `date`
-exit 
+exit
 else
 echo 'CLEAN SUCCESSFUL'
 sleep 3
-echo '--------------------------------------'
-echo 'FINISHED INSTALLING GLIBC STAGE II'
+echo '-------------------------------------'
+echo 'FINISHED INSTALLING LIBC STAGE II'
 echo `date`
-echo '--------------------------------------'
+echo '-------------------------------------'
 fi
 echo 'POST-PROCESSING THE ENVIRONMENT'
 echo 'SYSTEM READY'
